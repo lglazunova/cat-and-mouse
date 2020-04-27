@@ -1,6 +1,7 @@
 namespace SpriteKind {
     export const cat = SpriteKind.create()
     export const LISA = SpriteKind.create()
+    export const fish = SpriteKind.create()
 }
 namespace myTiles {
     //% blockIdentity=images._tile
@@ -61,6 +62,12 @@ namespace myTiles {
 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
 `
 }
+sprites.onOverlap(SpriteKind.Player, SpriteKind.fish, function (sprite, otherSprite) {
+    music.magicWand.play()
+    game.showLongText("level complete", DialogLayout.Bottom)
+    mySprite6.destroy(effects.halo, 200)
+    scene.cameraShake(4, 100)
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
     mySprite2.destroy(effects.spray, 500)
     music.playMelody("E B E A E G A F ", 500)
@@ -159,6 +166,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.cat, function (sprite, otherSpri
 `, SpriteKind.LISA)
     mySprite5.setPosition(152, 22)
 })
+controller.B.onEvent(ControllerButtonEvent.Released, function () {
+    game.splash("X=" + Math.trunc(mySprite.x), "Y=" + Math.trunc(mySprite.y))
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     music.playMelody("C5 B A G F E D C ", 500)
     game.showLongText("level complete", DialogLayout.Bottom)
@@ -214,29 +224,62 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.LISA, function (sprite, otherSpr
     mySprite5.destroy(effects.halo, 200)
     scene.cameraShake(4, 500)
     tiles.setTilemap(tiles.createTilemap(
-            hex`1000100006090909090909090909090909090907040e0d0f0d0d0d0d0d0d0d0d0d0d0d0a040d0d0f0d0d0d0d0d0d0d0d0d0d0d0a040d0e0e0e0e0e0e0e0e0e0e0e0d0d0a040d0e0e0e0e0d0d0d0d0d0d0e0d0d0a040d0e0d0d0d0d0d0d0d0d0d0e0d0d0a040d0e0d0d0e0e0e0e0e0e0e0e0d0d0a040d0e0d0d0d0d0d0d0d0d0d0d0d0d0a040d0e0d0d0e0e0e0e0e0e0e0e0d0d0a040d0e0d0d0e0d0d0d0d0d0d0e0d0d0a040d0e0d0d0d0d0d0d0d0d0d0e0d0d0a040d0e0d0d0e0d0d0d0d0d0d0e0d0d0a040d0e0d0d0e0e0e0e0e0e0e0e0d0d0a040d0e0d0d0d0d0d0d0d0d0d0d0d0d0a040d0d0d0d0d0d0d0d0d0d0d0d0d0d0a050c0c0c0c0c0c0c0c0c0c0c0c0c0c08`,
+            hex`1e001e00040404040404040404040404040404040404040404040404040b04040404040c05050705050505050505050505050505050909090909090909090904040505050705050505050505050505050505050909090909090909090904040909090909090909090909090909090905050909090909090909090904040909090909090909090909090909090905050909090909090909090904040909090909090909090909090909090905050909090909090909090904040505050505050505050505050505050905050909090909090909090904040d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0905050909090909090909090904040d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0905050905050505050705050504040909090909090909090909090909090905050905050505050505050504040505050705050505050505050705050905050905050909090909050504040505050705050505050505050705050905050905050909090909050504040505090909090905050905050905050905050905050909090909050504040505090909090905050905050905050905050905050909090909050504040505090909090905050905050905050905050905050909090909050504040505090909090905050905050905050905050905050909090909050504040505090909090905050905050905050905050905050909090909050504040505090909090905050905050905050905050905050909090909050504040505090909090905050905050905050905050905050909090909050504040505090909090905050905050905050905050905050909090909050504040505090909090905050905050905050905050905050909090909050504040505090909090905050905050905050905050905050909090909050504040505090909090905050905050905050905050905050909090909050504040505090909090905050905050905050905050905050909090909050504040505090909090905050905050905050905050905050909090909050504040505090909090905050905050905050905050905050909090909050504040505090909090905050905050905050905050905050909090909050504040505090909090905050905050905050905050905050909090909050504040505050705070707070707050507070707070707070707050707070504040b0b0404040404040404040b0404040404040404040404040404040404`,
             img`
-2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
-2 . . 2 . . . . . . . . . . . 2 
-2 . . 2 . . . . . . . . . . . 2 
-2 . 2 2 2 2 2 2 2 2 2 2 2 . . 2 
-2 . 2 2 2 2 . . . . . . 2 . . 2 
-2 . 2 . . . . . . . . . 2 . . 2 
-2 . 2 . . 2 2 2 2 2 2 2 2 . . 2 
-2 . 2 . . . . . . . . . . . . 2 
-2 . 2 . . 2 2 2 2 2 2 2 2 . . 2 
-2 . 2 . . 2 . . . . . . 2 . . 2 
-2 . 2 . . . . . . . . . 2 . . 2 
-2 . 2 . . 2 . . . . . . 2 . . 2 
-2 . 2 . . 2 2 2 2 2 2 2 2 . . 2 
-2 . 2 . . . . . . . . . . . . 2 
-2 . . . . . . . . . . . . . . 2 
-2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+2 . . . . . . . . . . . . . . . . . . 2 2 2 2 2 2 2 2 2 2 2 
+2 . . . . . . . . . . . . . . . . . . 2 2 2 2 2 2 2 2 2 2 2 
+2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . . 2 2 2 2 2 2 2 2 2 2 2 
+2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . . 2 2 2 2 2 2 2 2 2 2 2 
+2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . . 2 2 2 2 2 2 2 2 2 2 2 
+2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . . 2 2 2 2 2 2 2 2 2 2 2 
+2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . . 2 2 2 2 2 2 2 2 2 2 2 
+2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . . 2 . . . . . . . . . 2 
+2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . . 2 . . . . . . . . . 2 
+2 . . . . . . . . . . . . . . . 2 . . 2 . . 2 2 2 2 2 . . 2 
+2 . . . . . . . . . . . . . . . 2 . . 2 . . 2 2 2 2 2 . . 2 
+2 . . 2 2 2 2 2 . . 2 . . 2 . . 2 . . 2 . . 2 2 2 2 2 . . 2 
+2 . . 2 2 2 2 2 . . 2 . . 2 . . 2 . . 2 . . 2 2 2 2 2 . . 2 
+2 . . 2 2 2 2 2 . . 2 . . 2 . . 2 . . 2 . . 2 2 2 2 2 . . 2 
+2 . . 2 2 2 2 2 . . 2 . . 2 . . 2 . . 2 . . 2 2 2 2 2 . . 2 
+2 . . 2 2 2 2 2 . . 2 . . 2 . . 2 . . 2 . . 2 2 2 2 2 . . 2 
+2 . . 2 2 2 2 2 . . 2 . . 2 . . 2 . . 2 . . 2 2 2 2 2 . . 2 
+2 . . 2 2 2 2 2 . . 2 . . 2 . . 2 . . 2 . . 2 2 2 2 2 . . 2 
+2 . . 2 2 2 2 2 . . 2 . . 2 . . 2 . . 2 . . 2 2 2 2 2 . . 2 
+2 . . 2 2 2 2 2 . . 2 . . 2 . . 2 . . 2 . . 2 2 2 2 2 . . 2 
+2 . . 2 2 2 2 2 . . 2 . . 2 . . 2 . . 2 . . 2 2 2 2 2 . . 2 
+2 . . 2 2 2 2 2 . . 2 . . 2 . . 2 . . 2 . . 2 2 2 2 2 . . 2 
+2 . . 2 2 2 2 2 . . 2 . . 2 . . 2 . . 2 . . 2 2 2 2 2 . . 2 
+2 . . 2 2 2 2 2 . . 2 . . 2 . . 2 . . 2 . . 2 2 2 2 2 . . 2 
+2 . . 2 2 2 2 2 . . 2 . . 2 . . 2 . . 2 . . 2 2 2 2 2 . . 2 
+2 . . 2 2 2 2 2 . . 2 . . 2 . . 2 . . 2 . . 2 2 2 2 2 . . 2 
+2 . . 2 2 2 2 2 . . 2 . . 2 . . 2 . . 2 . . 2 2 2 2 2 . . 2 
+2 . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2 
+2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
 `,
-            [myTiles.tile0,myTiles.tile1,myTiles.tile2,sprites.castle.tileDarkGrass2,sprites.builtin.forestTiles9,sprites.builtin.forestTiles13,sprites.builtin.forestTiles5,sprites.builtin.forestTiles7,sprites.builtin.forestTiles15,sprites.builtin.forestTiles6,sprites.builtin.forestTiles11,sprites.builtin.forestTiles18,sprites.builtin.forestTiles14,sprites.castle.tileDarkGrass1,sprites.builtin.forestTiles4,sprites.builtin.forestTiles0],
+            [myTiles.tile0,myTiles.tile1,myTiles.tile2,sprites.builtin.forestTiles5,sprites.builtin.forestTiles1,sprites.castle.tileDarkGrass1,sprites.builtin.forestTiles0,sprites.castle.tileDarkGrass3,sprites.castle.saplingOak,sprites.castle.saplingPine,sprites.builtin.forestTiles16,sprites.builtin.forestTiles4,sprites.castle.shrub,sprites.dungeon.hazardWater],
             TileScale.Sixteen
         ))
-    mySprite.setPosition(0, 0)
+    mySprite.setPosition(24, 455)
+    mySprite6 = sprites.create(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . c c c c . . . 
+. . . . . . . c c d d d d c . . 
+. . . . . c c c c c c d d c . . 
+. . . c c c 4 4 1 4 d c c c c c 
+. . c 4 4 1 4 4 1 4 4 1 c c 1 f 
+. c 1 4 4 4 1 4 1 1 4 d 1 f 4 f 
+f 1 1 4 4 4 1 4 4 1 4 4 1 f 1 f 
+f 1 1 f 4 4 1 4 c f 4 4 1 1 4 f 
+f 1 1 4 4 4 1 c 4 f 4 4 1 f f f 
+. f 1 4 4 4 1 4 4 f 4 4 d f . . 
+. . f 4 4 1 4 c c 1 4 d f . . . 
+. . . f d 4 4 4 4 1 4 c f . . . 
+. . . . f f 4 4 4 1 c d b c . . 
+. . . . . . f f f f d d d c . . 
+. . . . . . . . . . c c c . . . 
+`, SpriteKind.fish)
+    mySprite6.setPosition(4, 2)
 })
 controller.anyButton.onEvent(ControllerButtonEvent.Pressed, function () {
     controller.player1.moveSprite(mySprite, 100, 100)
@@ -244,6 +287,7 @@ controller.anyButton.onEvent(ControllerButtonEvent.Pressed, function () {
 let mySprite5: Sprite = null
 let mySprite4: Sprite = null
 let mySprite3: Sprite = null
+let mySprite6: Sprite = null
 let mySprite2: Sprite = null
 let mySprite: Sprite = null
 mySprite = sprites.create(img`
